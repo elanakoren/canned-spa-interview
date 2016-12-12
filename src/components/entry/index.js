@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import SpaNavBar from '../navbar'
+
 class Entry extends React.Component {
   render() {
-    return (<h1>Hi Kenny</h1>);
+    return (<SpaNavBar />);
   }
 }
 
