@@ -1,9 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 import style from './style.scss';
 import Navbar from 'react-bootstrap/lib/Navbar';
-import Nav from 'react-bootstrap/lib/Nav';
-import NavItem from 'react-bootstrap/lib/NavItem';
 
 export default class SpaNavBar extends React.Component {
   render() {
@@ -14,10 +13,8 @@ export default class SpaNavBar extends React.Component {
             <a href="#">Standup</a>
           </Navbar.Brand>
         </Navbar.Header>
-        <Nav>
-          <NavItem eventKey={1} href="#">Employees</NavItem>
-          <NavItem eventKey={2} href="#">Standups</NavItem>
-        </Nav>
+        <Link to="/employees">Employees</Link>
+        <Link to="/standups">Standups</Link>
       </Navbar>
     )
   }

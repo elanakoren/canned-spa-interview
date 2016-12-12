@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { browserHistory, Router, Route} from 'react-router';
 import store from '../../reducers/rootReducer';
 import { Provider } from 'react-redux';
-
-import SpaNavBar from '../navbar'
-
-class Entry extends React.Component {
-  render() {
-    return (<SpaNavBar />);
-  }
-}
+import HomePage from '../homePage';
+import Employees from '../employees';
 
 ReactDOM.render(
   <Provider store={store}>
-    <Entry/>
+    <Router history={browserHistory}>
+      <Route path="/">
+        <Route path="employees" component={Employees}/>
+        <Route path="*" component={HomePage}/>
+      </Route>
+    </Router>
   </Provider>
   , document.getElementById('main'));
