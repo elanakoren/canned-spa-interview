@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import store from '../../reducers/rootReducer';
+import { Provider } from 'react-redux';
 
 import SpaNavBar from '../navbar'
 
@@ -9,4 +11,8 @@ class Entry extends React.Component {
   }
 }
 
-ReactDOM.render(<Entry/>, document.getElementById('main'));
+ReactDOM.render(
+  <Provider store={store}>
+    <Entry/>
+  </Provider>
+  , document.getElementById('main'));
