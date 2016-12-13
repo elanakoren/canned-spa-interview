@@ -21,6 +21,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
+        exclude: /(node_modules|bower_components)/,
         loaders: [
           "style-loader",
           'css-loader?localIdentName=[path][name]---[local]---[hash:base64:5]',
