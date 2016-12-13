@@ -1,4 +1,13 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk'
+
+function arrayToObject(data) {
+  let obj = {};
+  data.forEach((datum) => {
+    obj[datum.id] = datum
+  });
+  return obj;
+}
 
 function employees(state = {}, action) {
   switch (action.type) {
@@ -6,6 +15,11 @@ function employees(state = {}, action) {
       return {
         ...state,
         [action.employee.id]: action.employee
+      };
+    case 'GET_EMPLOYEES':
+      return {
+        ...state,
+        ...arrayToObject(action.employees)
       };
     default:
       return state
@@ -16,20 +30,6 @@ let standup = combineReducers({
   employees,
 });
 
-let store = createStore(standup, {}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
-store.dispatch({
-  type: 'CREATE_EMPLOYEE',
-  employee:  {
-    'id': 'driulis-gonzalez',
-    'name': 'Driulis González',
-    'start_date': 'January 1st 2015 ',
-    'active': true,
-    'email': 'driulis@mail.com',
-    'mobile': '14151234567',
-  }
-});
-
-console.log(store.getState());
-
-module.exports = store;
+module.exports = compose(applyMiddleware(thunk))(createStore)(standup, {},
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

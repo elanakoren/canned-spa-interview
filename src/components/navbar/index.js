@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import style from './style.scss';
 import Navbar from 'react-bootstrap/lib/Navbar';
 
 export default class SpaNavBar extends React.Component {
@@ -10,11 +9,13 @@ export default class SpaNavBar extends React.Component {
       <Navbar>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#">Standup</a>
+            <Link to="/">Standup</Link>
           </Navbar.Brand>
         </Navbar.Header>
-        <Link to="/employees">Employees</Link>
-        <Link to="/standups">Standups</Link>
+        <ul className="nav navbar-nav">
+          <li><Link to="/employees">Employees</Link></li>
+          <li><Link to="/standups">Standups</Link></li>
+        </ul>
       </Navbar>
     )
   }
