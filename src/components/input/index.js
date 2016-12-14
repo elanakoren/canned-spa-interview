@@ -6,6 +6,7 @@ export default class Input extends React.Component {
     return (
       <div>
         <label>{label}</label>
+        <br/>
         <input {...props}/>
       </div>
     );

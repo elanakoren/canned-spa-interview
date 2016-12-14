@@ -5,6 +5,8 @@ import employeeActions from '../../../actions/employee';
 
 import Input from '../../input';
 
+import style from './style.scss';
+
 class NewEmployeePage extends React.Component {
   constructor(props) {
     super(props);
@@ -34,14 +36,14 @@ class NewEmployeePage extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>New Employee Form</h1>
-        <form onSubmit={this.createEmployee}>
+      <div className={style.container}>
+        <h1 className={style.header}>New Employee Form</h1>
+        <form onSubmit={this.createEmployee} className={style.form}>
           <Input label="Name" type="text" name="name" onChange={this.onChange('name')} />
           <Input label="Email" type="email" name="email" onChange={this.onChange('email')} />
           <Input label="Mobile" type="phone" name="mobile" onChange={this.onChange('mobile')} />
           <Input label="Start date" type="date" name="start_date" onChange={this.onChange('start_date')} />
-          <button type="submit">Submit</button>
+          <button type="submit" className={style.submit}>Submit</button>
         </form>
       </div>
     );

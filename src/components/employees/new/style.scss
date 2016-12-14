@@ -1,0 +1,21 @@
+:local(.container) {
+  margin-left: 20px;
+}
+
+:local(.submit) {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+:local(.form) {
+  label {
+    font-weight: 400;
+  }
+  input {
+    margin-bottom: 10px;
+  }
+}
+
+:local(.header) {
+  font-weight: 600;
+}
