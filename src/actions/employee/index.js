@@ -21,8 +21,19 @@ module.exports = {
         },
         body: JSON.stringify(employeeData)
       };
-      console.log('right before return');
       return fetch('/api/employees/new', options)
+    }
+  },
+
+  makeInactive(employeeId) {
+    return () => {
+      const options = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      return fetch(`/api/employees/${employeeId}/inactive`, options)
     }
   }
 };

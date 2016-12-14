@@ -1,3 +1,4 @@
 /node_modules/
 src/static/js/bundle.js
 .env
+.testenv

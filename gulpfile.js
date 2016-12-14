@@ -1,10 +1,13 @@
-var gulp = require('gulp');
+var gulp = require('gulp-help')(require('gulp'));
 var jasmineBrowser = require('gulp-jasmine-browser');
+var jasmine = require('gulp-jasmine');
 var webpack = require('webpack-stream');
+var runSequence = require('run-sequence');
 
-var webpackConfig = require('./webpack.config.js');
+var child_process = require('child_process');
+var path = require('path');
 
-gulp.task('jasmine', function() {
+gulp.task('jasmine', 'runs unit tests for frontend', function() {
   const JasmineConfig = Object.assign({}, {
     watch: true,
     output: {filename: 'spec.js'},
@@ -12,12 +15,12 @@ gulp.task('jasmine', function() {
       loaders: [
         {
           test: /\.js$/,
-          exclude: /(node_modules|bower_components)/,
+          include: path.resolve(__dirname, "src"),
           loader: 'babel-loader'
         },
         {
           test: /\.scss$/,
-          exclude: /(node_modules|bower_components)/,
+          include: path.resolve(__dirname, "src"),
           loaders: [
             "style-loader",
             'css-loader?localIdentName=[path][name]---[local]---[hash:base64:5]',
@@ -40,4 +43,31 @@ gulp.task('jasmine', function() {
     .pipe(webpack(JasmineConfig))
     .pipe(jasmineBrowser.specRunner())
     .pipe(jasmineBrowser.server({port: 8888}));
+});
+
+gulp.task('jasmine-server', 'runs unit tests for backend', function(done) {
+  return gulp.src(['server/helpers/test-helper.js', 'server/**/spec.js'])
+    .pipe(jasmine(done))
+});
+
+
+var server;
+gulp.task('startTestServer', 'starts test server on port 8000 for unit tests to run against', function() {
+  server = child_process.exec('NODE_ENV=test PORT=8000 node ./server');
+  return server;
+});
+
+gulp.task('killTestServer', 'kills the test server', function() {
+  if (server) {
+    server.kill()
+  }
+});
+
+gulp.task('jasmine:server', 'runs startTestServer -> jasmine-server -> killTestServer', function(done) {
+  return runSequence(
+    'startTestServer',
+    'jasmine-server',
+    'killTestServer',
+    done
+  )
 });
