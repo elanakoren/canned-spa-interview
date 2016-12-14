@@ -18,7 +18,6 @@ function employees(state = {}, action) {
       };
     case 'GET_EMPLOYEES':
       return {
-        ...state,
         ...arrayToObject(action.employees)
       };
     default:

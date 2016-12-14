@@ -8,7 +8,9 @@ module.exports = {
         if (response.status >= 400) {
           throw new Error("Bad response from server");
         }
-        return response.json();
+        if (response.status !== 204) {
+          return response.json();
+        }
       })
   }
 };

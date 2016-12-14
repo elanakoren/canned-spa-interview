@@ -1,5 +1,17 @@
 import { fetch } from '../../api';
 
+const toggleActive = (employeeId, active) => {
+  return () => {
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    return fetch(`/api/employees/${employeeId}/active/${active}`, options)
+  }
+}
+
 module.exports = {
   getAll() {
     return (dispatch) => {
@@ -26,14 +38,10 @@ module.exports = {
   },
 
   makeInactive(employeeId) {
-    return () => {
-      const options = {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-      return fetch(`/api/employees/${employeeId}/inactive`, options)
-    }
+    return toggleActive(employeeId, false)
+  },
+
+  makeActive(employeeId) {
+    return toggleActive(employeeId, true)
   }
 };

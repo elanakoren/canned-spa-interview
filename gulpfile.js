@@ -1,7 +1,8 @@
 var gulp = require('gulp-help')(require('gulp'));
 var jasmineBrowser = require('gulp-jasmine-browser');
 var jasmine = require('gulp-jasmine');
-var webpack = require('webpack-stream');
+var webpackStream = require('webpack-stream');
+var webpack = require('webpack');
 var runSequence = require('run-sequence');
 
 var child_process = require('child_process');
@@ -19,6 +20,10 @@ gulp.task('jasmine', 'runs unit tests for frontend', function() {
           loader: 'babel-loader'
         },
         {
+          test: /\.json$/,
+          loader: 'json-loader'
+        },
+        {
           test: /\.scss$/,
           include: path.resolve(__dirname, "src"),
           loaders: [
@@ -30,8 +35,6 @@ gulp.task('jasmine', 'runs unit tests for frontend', function() {
       ]
     },
     externals: {
-      'jsdom': 'window',
-      'cheerio': 'window',
       'react/lib/ExecutionEnvironment': true,
       'react/addons': true,
       'react-dom/lib/ReactTestUtils': true,
@@ -40,7 +43,7 @@ gulp.task('jasmine', 'runs unit tests for frontend', function() {
   });
 
   return gulp.src(['src/**/spec.js'])
-    .pipe(webpack(JasmineConfig))
+    .pipe(webpackStream(JasmineConfig))
     .pipe(jasmineBrowser.specRunner())
     .pipe(jasmineBrowser.server({port: 8888}));
 });

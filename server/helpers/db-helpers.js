@@ -5,15 +5,15 @@ module.exports = function dbHelper(db) {
     },
 
     createEmployee(employeeData) {
-      return db.none("INSERT INTO employees VALUES(${name}, ${start_date}, ${active}, ${email}, ${mobile})", employeeData);
+      return db.query("INSERT INTO employees VALUES(${name}, ${start_date}, ${active}, ${email}, ${mobile})", employeeData);
     },
 
-    getActiveEmployees() {
-      return db.any("select * from employees where active=true");
+    getEmployees() {
+      return db.query("select * from employees");
     },
 
     getEmployee(id) {
-      return db.any("select * from employees where id=$1", [id]);
+      return db.query("select * from employees where id=$1", [id]);
     }
   };
 };
