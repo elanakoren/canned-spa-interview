@@ -1,23 +1,16 @@
-var promise = require('bluebird'); // or any other Promise/A+ compatible library;
+var Sequelize = require("sequelize");
 
-var options = {
-  promiseLib: promise // overriding the default (ES6 Promise);
-};
+var sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASS,
+  {
+    host: process.env.DB_HOST,
+    dialect: 'postgres',
+    logging: false,
+    define: {
+      timestamps: false
+    }
+  });
 
-var pgp = require('pg-promise')(options);
-// See also: https://github.com/vitaly-t/pg-promise#initialization-options
-
-// Database connection details;
-var cn = {
-  host: process.env.DB_HOST, // 'localhost' is the default;
-  port: process.env.DB_PORT, // 5432 is the default;
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS
-};
-// You can check for all default values in:
-// https://github.com/brianc/node-postgres/blob/master/lib/defaults.js
-
-var db = pgp(cn);
-
-module.exports = db;
+module.exports = sequelize;

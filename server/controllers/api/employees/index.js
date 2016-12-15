@@ -1,25 +1,30 @@
 var employees = require('express')();
 
 var db = require('../../../helpers/db-connect');
-var dbHelpers = require('../../../helpers/db-helpers')(db);
+var Employee = require('../../../models/employee');
 
 employees.get('/', function(req, res) {
-  dbHelpers.getEmployees().then( function(data) {
-    res.send(data);
+  Employee.findAll().then( function(employees) {
+    res.send(employees);
   });
 });
 
 employees.post('/new', function(req, res) {
-  dbHelpers.createEmployee(req.body)
-    .then(function (data) {
+  Employee.create(req.body)
+    .then(function (employee) {
       res.status(201);
-      res.send(data);
+      res.send(employee);
     });
 });
 
 employees.put('/:id/active/:active', function (req, res) {
-  db.none("update employees set active=$1 where id=$2", [req.params.active === 'true', parseInt(req.params.id, 10)])
-    .then(function () {
+  Employee.update(
+    {active: req.params.active === 'true'},
+    {
+      where: {
+        id: parseInt(req.params.id, 10)
+    }
+  }).then(function () {
       res.status(204).end();
     });
 });

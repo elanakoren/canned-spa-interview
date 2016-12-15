@@ -1,13 +1,13 @@
 require('dotenv').config({path: './.testenv'});
 
 var request = require("request");
-var db = require('./helpers/db-connect');
-
-var dbHelpers = require('./helpers/db-helpers')(db);
+var Employee = require('./models/employee');
 
 beforeEach(function (done) {
-  return dbHelpers.resetDatabase().then(function () {
-    return dbHelpers.createEmployee({
+  return Employee.truncate({
+    restartIdentity: true
+  }).then(function () {
+    return Employee.create({
       name: 'test',
       start_date: '12/1/2016',
       active: true,
@@ -15,14 +15,14 @@ beforeEach(function (done) {
       mobile: '4155555555'
     });
   }).then(function () {
-    return dbHelpers.createEmployee({
+    return Employee.create({
       name: 'inactive',
       start_date: '12/1/2016',
       active: false,
       email: 'inactive@test.com',
       mobile: '4155555555'
-    }).then(done);
-  });
+    });
+  }).then(done);
 });
 
 describe("Standup Server", function () {
@@ -63,8 +63,8 @@ describe("Standup Server", function () {
     it("returns status code 204 makes the the corresponding employee inactive", function (done) {
       request.put(serverUrl + "/api/employees/1/active/false", function (error, response) {
         expect(response.statusCode).toBe(204);
-        dbHelpers.getEmployees().then(function (data) {
-          expect(data[0].active).toEqual(false);
+        Employee.findAll().then(function (employees) {
+          expect(employees[0].active).toEqual(false);
           done();
         });
       });
@@ -73,8 +73,8 @@ describe("Standup Server", function () {
     it("returns status code 204 makes the the corresponding employee active", function (done) {
       request.put(serverUrl + "/api/employees/2/active/true", function (error, response) {
         expect(response.statusCode).toBe(204);
-        dbHelpers.getEmployees().then(function (data) {
-          expect(data[1].active).toEqual(true);
+        Employee.findAll().then(function (employees) {
+          expect(employees[1].active).toEqual(true);
           done();
         });
       });
@@ -91,7 +91,7 @@ describe("Standup Server", function () {
         mobile: '415555555'
       };
 
-      dbHelpers.getEmployees().then(function (employees) {
+      Employee.findAll().then(function (employees) {
         expect(employees.length).toEqual(2);
         request.post({
           url: serverUrl + "/api/employees/new",
@@ -99,7 +99,7 @@ describe("Standup Server", function () {
           json: true
         }, function (error, response) {
           expect(response.statusCode).toBe(201);
-          dbHelpers.getEmployees().then(function (data) {
+          Employee.findAll().then(function (data) {
             expect(data.length).toEqual(3);
             expect(data[2].name).toEqual('jasmine');
             expect(data[2].email).toEqual('jasmine@test.com');
