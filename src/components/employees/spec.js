@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import {shallow} from 'enzyme';
 
 import {Employees} from './index';
@@ -30,6 +31,10 @@ describe('EmployeesPage', () => {
     wrapper = shallow(<Employees employees={employees} dispatch={dispatchStub}/>)
   });
 
+  it('renders the header', () => {
+    expect(wrapper.find('h1').render().text()).toEqual('Employees');
+  });
+
   it('fetches the employees', () => {
     wrapper.instance().componentDidMount();
     expect(dispatchStub).toHaveBeenCalled();
@@ -46,6 +51,12 @@ describe('EmployeesPage', () => {
     wrapper.find(EmployeeItem).simulate('click');
     expect(dispatchStub).toHaveBeenCalled();
     expect(employeeActions.makeInactive).toHaveBeenCalledWith(1);
+  });
+
+  it('renders a link to the new employee form', () => {
+    expect(wrapper.find(Link).render().text()).toEqual('Add a New Employee');
+    expect(wrapper.find(Link).props().to).toEqual('/employees/new');
+    expect(wrapper.find(Link).props().className).toEqual('btn btn-primary');
   });
 
   describe('inactive employees', () => {

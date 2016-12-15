@@ -1,32 +1,11 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk'
-
-function arrayToObject(data) {
-  let obj = {};
-  data.forEach((datum) => {
-    obj[datum.id] = datum
-  });
-  return obj;
-}
-
-function employees(state = {}, action) {
-  switch (action.type) {
-    case 'CREATE_EMPLOYEE':
-      return {
-        ...state,
-        [action.employee.id]: action.employee
-      };
-    case 'GET_EMPLOYEES':
-      return {
-        ...arrayToObject(action.employees)
-      };
-    default:
-      return state
-  }
-}
+import employees from './employees';
+import standups from './standups';
 
 let standup = combineReducers({
   employees,
+  standups,
 });
 
 

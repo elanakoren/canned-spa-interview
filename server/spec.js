@@ -45,6 +45,20 @@ describe("Standup Server", function () {
     });
   });
 
+  xdescribe('GET /api/standups', function () {
+    it('returns status code 200 and all standups', function (done) {
+      request.get(serverUrl + "/api/standups", function (error, response, body) {
+        const data = JSON.parse(body);
+        expect(response.statusCode).toBe(200);
+        expect(data.length).toEqual(2);
+        expect(data[0].employees[0].name).toEqual('test');
+        expect(data[0].employees[1].name).toEqual('inactive');
+        expect(data[0].standup.date).toEqual('12/2/2016');
+        done();
+      });
+    });
+  });
+
   describe("PUT /api/employees/:id/active/:active", function () {
     it("returns status code 204 makes the the corresponding employee inactive", function (done) {
       request.put(serverUrl + "/api/employees/1/active/false", function (error, response) {

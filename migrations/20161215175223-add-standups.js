@@ -15,20 +15,16 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('employees', {
-    name: 'string',
-    start_date: 'date',
-    active: 'boolean',
-    email: 'string',
-    mobile: 'string',
-    id: { type: 'bigserial', primaryKey: true }
+  return db.createTable('standups', {
+    id: { type: 'bigserial', primaryKey: true },
+    date: 'date',
   });
 };
 
 exports.down = function(db) {
-  return db.dropTable('employees');
+  return db.dropTable('standups');
 };
 
 exports._meta = {
   "version": 1
-};
+}; 
