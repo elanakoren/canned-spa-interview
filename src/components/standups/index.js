@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-export class StandupsPage extends React.Component {
+export default class StandupsPage extends React.Component {
   render() {
     return (
       <div>

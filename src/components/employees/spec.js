@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import {shallow} from 'enzyme';
 
-import {Employees} from './index';
+import {EmployeesPage} from './index';
 import EmployeeItem from './employee_item';
 import employeeActions from '../../actions/employee';
 
@@ -28,7 +28,7 @@ describe('EmployeesPage', () => {
     spyOn(employeeActions, 'getAll');
     spyOn(employeeActions, 'makeActive');
     spyOn(employeeActions, 'makeInactive');
-    wrapper = shallow(<Employees employees={employees} dispatch={dispatchStub}/>)
+    wrapper = shallow(<EmployeesPage employees={employees} dispatch={dispatchStub}/>)
   });
 
   it('renders the header', () => {

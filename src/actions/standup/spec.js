@@ -21,4 +21,17 @@ describe('StandupActions', () => {
       });
     });
   });
+
+  describe('createStandup', () => {
+    it('post to /api/standups/new', () => {
+      createStandup('2016-10-10')(dispatchStub);
+      expect(fetchHelper.fetch).toHaveBeenCalledWith('/api/standups/new', {
+        headers: {
+          contentType: 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify({date: '2016-10-10'})
+      });
+    });
+  });
 });

@@ -1,7 +1,8 @@
 import React from 'react';
 import {shallow} from 'enzyme';
+import {Link} from 'react-router';
 
-import {StandupsPage} from './index';
+import StandupsPage from './index';
 
 describe('StandupsPage', () => {
   let wrapper;

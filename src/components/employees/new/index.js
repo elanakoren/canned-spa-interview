@@ -7,7 +7,7 @@ import Input from '../../input';
 
 import style from './style.scss';
 
-class NewEmployeePage extends React.Component {
+class EmployeesForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -50,4 +50,4 @@ class NewEmployeePage extends React.Component {
   }
 }
 
-export default connect()(NewEmployeePage);
+export default connect()(EmployeesForm);

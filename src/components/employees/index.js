@@ -6,7 +6,7 @@ import EmployeeItem from './employee_item';
 
 import style from './style.scss';
 
-export class Employees extends React.Component {
+export class EmployeesPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -80,7 +80,7 @@ export class Employees extends React.Component {
   }
 }
 
-Employees.propTypes = {
+EmployeesPage.propTypes = {
   employees: React.PropTypes.object.isRequired
 };
 
@@ -90,4 +90,4 @@ function mapStateToProps(state) {
   }
 };
 
-export default connect(mapStateToProps)(Employees);
+export default connect(mapStateToProps)(EmployeesPage);

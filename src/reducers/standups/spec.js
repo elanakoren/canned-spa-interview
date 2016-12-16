@@ -18,7 +18,7 @@ describe('Standups Reducer', () => {
         standups: [{id: 1, name: 'standup'}]
       });
       expect(nextState[1]).toEqual({id: 1, name: 'standup'});
-      expect(Object.keys(nextState)).toEqual(1);
+      expect(Object.keys(nextState)[0]).toEqual('1');
     });
   });
 });

@@ -15,7 +15,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('standups', {
+  return db.createTable('standup_occurances', {
     id: { type: 'bigserial', primaryKey: true },
     date: 'date',
   });
